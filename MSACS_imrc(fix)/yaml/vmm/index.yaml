@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: vmm-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vmm
+    spec:
+      containers:
+      - name: vmm
+        image: imrc/avmmanager:2019
+        ports:
+        - containerPort: 8087
+        env:
+        - name: SM_URL
+          value: "10.100.0.4"
+        - name: SIC_URL
+          value: "10.100.0.5"    
+        volumeMounts:
+        - name: vmm-pv-storage
+          mountPath: 'C:\VMMLog'
+      volumes:
+      - name: vmm-pv-storage
+        persistentVolumeClaim:
+          claimName: vmm-pv-claim   
+      nodeSelector:
+        beta.kubernetes.io/os: windows

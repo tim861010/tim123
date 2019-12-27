@@ -1,0 +1,9 @@
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil  C:\Users\A5230171\source\repos\monitor\bin\Debug\monitor.exe
+
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil /u C:\Users\A5230171\source\repos\monitor\bin\Debug\monitor.exe
+
+
+15859788098m@sina.cn
+timtim861010@qq.com
+

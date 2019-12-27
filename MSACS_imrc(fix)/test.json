@@ -1,0 +1,33 @@
+{
+  "apiVersion": "apps/v1beta1",
+  "kind": "Deployment",
+  "metadata": {
+    "name": "system-monitor-deployment"
+  },
+  "spec": {
+    "replicas": 1,
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "system-monitor"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "system-monitor",
+            "image": "imrc/systemmonitor:2019",
+            "ports": [
+              {
+                "containerPort": 80
+              }
+            ]
+          }
+        ],
+        "nodeSelector": {
+          "beta.kubernetes.io/os": "windows"
+        }
+      }
+    }
+  }
+}

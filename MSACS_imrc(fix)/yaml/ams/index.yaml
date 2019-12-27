@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: avm-server-1-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: avm-server-1
+        avm-server-num: avms-1
+    spec:
+      containers:
+      - name: avm-server-1
+        image: imrc/avmserver:2019
+        ports:
+        - containerPort: 8085
+        env:
+        - name: SM_URL
+          value: "10.100.0.4"
+        - name: VMM_IP
+          value: "10.100.0.6"   
+        - name: AVM_NAME
+          value: "AVM_1"   
+        volumeMounts:
+        - name: avm-server-1-pv-storage
+          mountPath: 'C:\VMSLog'
+        - name: avm-model-1-pv-storage
+          mountPath: 'C:\AVM\VMS-V01.00.11.77[EXE]\UpdateModel'
+      volumes:
+      - name: avm-server-1-pv-storage
+        persistentVolumeClaim:
+          claimName: avm-server-1-pv-claim  
+      - name: avm-model-1-pv-storage
+        persistentVolumeClaim:
+          claimName: avm-model-1-pv-claim   
+      nodeSelector:
+        beta.kubernetes.io/os: windows

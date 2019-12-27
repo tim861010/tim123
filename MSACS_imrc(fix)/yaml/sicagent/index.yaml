@@ -1,0 +1,33 @@
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: sic-agent-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sic-agent
+    spec:
+      containers:
+      - name: sic-agent
+        image: imrc/sicagent:2019
+        ports:
+        - containerPort: 80
+        env:
+        - name: AMC_IP
+          value: "10.100.0.7"
+        - name: SM_URL
+          value: "10.100.0.4"
+        - name: VMM_IP
+          value: "10.100.0.6"
+        volumeMounts:
+        - name: sic-agent-pv-storage
+          mountPath: 'C:\AVM\SIC-V01.00.09.b14[bin]\SICAgentServer\App_Data\Log'
+      volumes:
+      - name: sic-agent-pv-storage
+        persistentVolumeClaim:
+          claimName: sic-agent-pv-claim
+      nodeSelector:
+        beta.kubernetes.io/os: windows

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: avm-server-1-service
+  labels:
+    app: avm-server-01
+    avm-server-num: avms-01
+spec:
+  clusterIP: "10.100.0.8"
+  selector:
+    app: avm-server-01
+  ports:
+    - protocol: TCP
+      port: 8085
+      targetPort: 8085
+      nodePort: 30885
+  type: NodePort

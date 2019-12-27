@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sic-agent-pv-volume
+  labels:
+    type: local
+    app: sic-agent
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: 'C:\AVMContainerizeLog\SICLog'
+    type: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: beta.kubernetes.io/os
+          operator: In
+          values:
+          - windows
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sic-agent-pv-claim
+  labels:
+    app: sic-agent
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

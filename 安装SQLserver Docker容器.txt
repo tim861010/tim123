@@ -1,0 +1,7 @@
+Docker Hub      https://hub.docker.com/repository/docker/lovelylin/sqlserver     
+
+docker push lovelylin/sqlserver:monitored_folder
+
+docker run -it --name sqlserver -p 2019:1433 -e sa_password=Tower#0309 -e ACCEPT_EULA=Y lovelylin/sqlserver:monitored_folder 
+
+docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" [container_name]

@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: amc-pv-volume
+  labels:
+    type: local
+    app: amc
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: 'C:\AVMContainerizeLog\AMCLog'
+    type: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: beta.kubernetes.io/os
+          operator: In
+          values:
+          - windows
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: amc-pv-claim
+  labels:
+    app: amc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

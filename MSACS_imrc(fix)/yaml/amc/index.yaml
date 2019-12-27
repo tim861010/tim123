@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: amc-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: amc
+    spec:
+      containers:
+      - name: amc
+        image: imrc/amc:2019
+        stdin: true
+        tty: true
+        ports:
+        - containerPort: 8765
+        env:
+        - name: SM_URL
+          value: "10.100.0.4"
+        - name: SIC_URL
+          value: "10.100.0.5"   
+        volumeMounts:
+        - name: amc-pv-storage
+          mountPath: 'C:\AVM\AMC-V01.00.00.b27[bin][Log]\log'
+      volumes:
+      - name: amc-pv-storage
+        persistentVolumeClaim:
+          claimName: amc-pv-claim
+      nodeSelector:
+        beta.kubernetes.io/os: windows
